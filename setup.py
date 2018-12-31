@@ -16,7 +16,8 @@ setup(
     install_requires=[
         'Flask>=0.12.2',
         'python-dotenv',
-        'requests'
+        'requests',
+        'python-dateutil'
     ],
     tests_require=[
         'pytest>=3',
