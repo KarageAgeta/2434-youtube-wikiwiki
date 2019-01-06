@@ -12,9 +12,9 @@ from myapp.youtube import Youtube
 
 @app.cli.command(help='Generate WIKIWIKI.jp statement from Youtube API')
 @click.option('--date')
-@click.option('--name')
+@click.option('--names')
 @with_appcontext
-def generate_youtube_wikiwiki(date: str, name: str):
+def generate_youtube_wikiwiki(date: str, names: str):
     format = Format()
     csv = Csv()
     youtube = Youtube(app)
@@ -24,10 +24,10 @@ def generate_youtube_wikiwiki(date: str, name: str):
 
     channel_ids = []
     for i in range(len(channel_id_list['names'])):
-        # TODO : fix (multiple choice)
-        if name:
-            if channel_id_list['names'][i] == name:
-                channel_ids.append(channel_id_list['channels'][i])
+        if names:
+            for name in names.split(','):
+                if channel_id_list['names'][i] == name:
+                    channel_ids.append(channel_id_list['channels'][i])
         else:
             channel_ids.append(channel_id_list['channels'][i])
 
@@ -50,12 +50,10 @@ def generate_youtube_wikiwiki(date: str, name: str):
                 item['title'],
             ))
 
-        for item in result:
-            print(item)
-            # with open('tmp.txt', mode='a') as f:
-            #     f.write(item + '\n')
-        break
-
+    for item in result:
+        print(item)
+        # with open('tmp.txt', mode='a') as f:
+        #     f.write(item + '\n')
 
 @app.cli.command(help='Generate Channel ID')
 @with_appcontext
