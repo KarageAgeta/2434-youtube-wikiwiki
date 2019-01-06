@@ -31,6 +31,7 @@ class Csv:
                 caption_templates.append(row[2])
                 delimiters.append(row[3])
 
+        # TODO : fix
         return {
             'names': names,
             'templates': templates,
@@ -38,16 +39,22 @@ class Csv:
             'delimiters': delimiters
         }
 
-    def read_youtube_channel_list(self) -> list:
+    def read_youtube_channel_list(self) -> dict:
         with open('static/youtube_channel.csv', 'r') as f:
             reader = csv.reader(f)
             next(reader)  # remove header
 
+            names = []
             channels = []
             for row in reader:
+                names.append(row[0])
                 channels.append(row[2])
 
-        return channels
+        # TODO : fix
+        return {
+            'names': names,
+            'channels': channels
+        }
 
     def generate_channel_ids(self, name, title, id):
         with open('static/youtube_channel.csv', mode='a') as f:

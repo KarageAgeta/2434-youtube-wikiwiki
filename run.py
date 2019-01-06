@@ -12,13 +12,24 @@ from myapp.youtube import Youtube
 
 @app.cli.command(help='Generate WIKIWIKI.jp statement from Youtube API')
 @click.option('--date')
+@click.option('--name')
 @with_appcontext
-def generate_youtube_wikiwiki(date):
+def generate_youtube_wikiwiki(date: str, name: str):
     format = Format()
     csv = Csv()
-    channel_template_list = csv.read_youtube_template_list()
-    channel_ids = csv.read_youtube_channel_list()
     youtube = Youtube(app)
+
+    channel_template_list = csv.read_youtube_template_list()
+    channel_id_list = csv.read_youtube_channel_list()
+
+    channel_ids = []
+    for i in range(len(channel_id_list['names'])):
+        # TODO : fix (multiple choice)
+        if name:
+            if channel_id_list['names'][i] == name:
+                channel_ids.append(channel_id_list['channels'][i])
+        else:
+            channel_ids.append(channel_id_list['channels'][i])
 
     result = []
     for i in range(len(channel_ids)):
