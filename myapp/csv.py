@@ -3,7 +3,7 @@ import csv
 
 class Csv:
     def __init__(self):
-        self.tag_template = '[[{tag}]]'
+        pass
 
     def init_members(self) -> list:
         with open('static/members.csv', 'r') as f:
@@ -56,7 +56,39 @@ class Csv:
             'channels': channels
         }
 
-    def generate_channel_ids(self, name, title, id):
+    def write_channel_id(self, name: str, title: str, id: str):
         with open('static/youtube_channel.csv', mode='a') as f:
             writer = csv.writer(f, quoting=csv.QUOTE_ALL, lineterminator='\n')
             writer.writerow([name, title, id])
+
+    def write_video(
+            self,
+            filename: str,
+            id: str,
+            name: str,
+            title: str,
+            url: str,
+            published_at: str,
+            collaborators: str
+    ):
+        with open('static/' + filename, mode='a') as f:
+            writer = csv.writer(f, quoting=csv.QUOTE_ALL, lineterminator='\n')
+            writer.writerow([id, name, title, url, published_at, collaborators])
+
+    def read_video_from_name(self, filename: str, name: str) -> list:
+        with open('static/' + filename, mode='r') as f:
+            reader = csv.reader(f)
+
+            result = []
+            for row in reader:
+                collaborators = row[4].split(',')
+                if collaborators.count(name) != 0:
+                    result.append({
+                        'id': row[0],
+                        'title': row[1],
+                        'url': row[2],
+                        'published_at': row[3],
+                        'collaborators': collaborators,
+                    })
+
+        return result
