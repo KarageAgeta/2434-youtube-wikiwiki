@@ -1,15 +1,17 @@
 2434-youtube-wikiwiki
 ===
 
-CLI app to generate statement for WIKIWIKI.jp from にじさんじ's Youtube video list.
+An CLI app to generate にじさんじ's Youtube video list for WIKIWIKI.jp.
 
 Requirements for development
 ---
+
 - Python>=3.5
 - virtualenv
 
 Getting Started
 ---
+
 ### Clone this repository
 ```
 $ pip3 install virtualenv
@@ -37,13 +39,34 @@ $ export FLASK_APP=run.py
 
 Commands
 ---
-Get Youtube video list and generate statement for WIKIWIKI.jp
+
+### Get Youtube video list
 ```
 $ flask generate-youtube-wikiwiki
 ```
 
+| Params | Description | Value example |
+| --- | --- | --- |
+| names | A list of VTuber's names with ',' separated | `--names=月ノ美兎,樋口楓` |
+| date | Get Youtube video list uploaded after this list | `--date=2019-10-1` |
+
+### Get Youtube channel ids for にじさんじ members
+```
+$ flask generate_youtube_channel_id
+```
+
+
+### Get Youtube video detail by video id (WIP)
+```
+$ flask generate-youtube-wikiwiki
+```
+| Params | Description | Value example |
+| --- | --- | --- |
+| videoID | Get Video list uploaded after this list | `--date=2019-10-1` |
+
 flake8
 ---
+
 ```
 $ flake8 run.py myapp
 ```
@@ -51,7 +74,7 @@ $ flake8 run.py myapp
 License
 ---
 ```
-Copyright 2018 Yoko Karasaki
+Copyright 2019 Yoko Karasaki
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -33,11 +33,9 @@ def generate_youtube_wikiwiki(date: str, names: str):
 
     result = []
     for i in range(len(channel_ids)):
-        youtube_list = youtube.fetch_video_list(channel_ids[i])
+        youtube_list = youtube.fetch_video_list(channel_ids[i], date)
 
         for item in youtube_list:
-            if date and item['published_at'] < date:
-                continue
             result.insert(0, format.generate_youtube_wikiwiki_statement(
                 channel_template_list['templates'][i],
                 channel_template_list['caption_templates'][i],

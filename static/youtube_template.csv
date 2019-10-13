@@ -1,3 +1,3 @@
 name,template,caption_template,delimiters
-"伏見ガク","-[[{title}[{published_at}]>{url}]]","|BGCOLOR(#eee):{collaborators}とのコラボ。|","、"
-"葛葉","-{published_at} &color(Red){{■}};[[{title}>{url}]]","|BGCOLOR(#eee):{collaborators}|","・"
+"葛葉","-{published_at} &color(Red){{■}};[[{title}>{url}]]","|BGCOLOR(#eee):コラボ相手：{collaborators}|","・"
+"三枝明那","-{published_at} &color(Red){{■}};[[{title}>{url}]]","|BGCOLOR(#eee):コラボ相手：{collaborators}|","・"
