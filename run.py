@@ -62,7 +62,10 @@ def generate_youtube_channel_id():
 
     for member in members:
         channel = youtube.fetch_channel_list(member)
-        csv.generate_channel_ids(channel['name'], channel['channel_name'], channel['channel_id'])
+        name = channel['name'] if 'name' in channel else ''
+        channel_name = channel['channel_name'] if 'channel_name' in channel else ''
+        channel_id = channel['channel_id'] if 'channel_id' in channel else ''
+        csv.generate_channel_ids(name, channel_name, channel_id)
 
 
 if __name__ == 'run' or __name__ == 'main':

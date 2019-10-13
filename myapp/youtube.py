@@ -50,17 +50,21 @@ class Youtube:
 
         return self.__fetch_video_detail(ids)
 
-    def fetch_channel_list(self, user_name):
+    def fetch_channel_list(self, user_name) -> dict:
         channel_url = self.channel_url.format(api_key=self.config['YOUTUBE_API_KEY'], user_name=user_name)
         data = json.loads(requests.get(channel_url).text)
 
         if not data.get(self.key_page_info) or data.get(self.key_page_info).get(self.key_total_results) == 0:
-            return []
+            return {}
+
+        item = data['items'][0]['snippet'] if 'snippet' in data['items'][0] else {}
+        if not item:
+            return {}
 
         return {
             'name': user_name,
-            'channel_name': data['items'][0]['snippet']['channelTitle'],
-            'channel_id': data['items'][0]['id']['channelId']
+            'channel_name': item['channelTitle'] if 'channelTitle' in item else '',
+            'channel_id': item['channelId'] if 'channelId' in item else ''
         }
 
     # private

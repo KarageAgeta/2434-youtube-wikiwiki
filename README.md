@@ -52,9 +52,8 @@ $ flask generate-youtube-wikiwiki
 
 ### Get Youtube channel ids for にじさんじ members
 ```
-$ flask generate_youtube_channel_id
+$ flask generate-youtube-channel-id
 ```
-
 
 ### Get Youtube video detail by video id (WIP)
 ```
