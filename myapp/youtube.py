@@ -48,7 +48,7 @@ class Youtube:
                 continue
             break
 
-        return self.__fetch_video_detail(ids)
+        return self.fetch_video_detail(ids)
 
     def fetch_channel_list(self, user_name) -> dict:
         channel_url = self.channel_url.format(api_key=self.config['YOUTUBE_API_KEY'], user_name=user_name)
@@ -67,9 +67,7 @@ class Youtube:
             'channel_id': item['channelId'] if 'channelId' in item else ''
         }
 
-    # private
-
-    def __fetch_video_detail(self, ids: list) -> list:
+    def fetch_video_detail(self, ids: list) -> list:
         result = []
         for id_list in list(chunks(ids, 5)):
             url = self.video_url.format(api_key=self.config['YOUTUBE_API_KEY'], video_ids=','.join(id_list))

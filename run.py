@@ -10,11 +10,11 @@ from myapp.format import Format
 from myapp.youtube import Youtube
 
 
-@app.cli.command(help='Generate WIKIWIKI.jp statement from Youtube API')
+@app.cli.command(help='Generate にじさんじ\'s Youtube video list for WIKIWIKI.jp')
 @click.option('--date')
 @click.option('--names')
 @with_appcontext
-def generate_youtube_wikiwiki(date: str, names: str):
+def generate_youtube_wikiwiki_list(date: str, names: str):
     format = Format()
     csv = Csv()
     youtube = Youtube(app)
@@ -37,6 +37,7 @@ def generate_youtube_wikiwiki(date: str, names: str):
 
         for item in youtube_list:
             result.insert(0, format.generate_youtube_wikiwiki_statement(
+                # TODO : fix
                 channel_template_list['templates'][i],
                 channel_template_list['caption_templates'][i],
                 channel_template_list['delimiters'][i],
@@ -50,8 +51,44 @@ def generate_youtube_wikiwiki(date: str, names: str):
 
     for item in result:
         print(item)
-        # with open('tmp.txt', mode='a') as f:
-        #     f.write(item + '\n')
+
+@app.cli.command(help='Generate にじさんじ\'s Youtube video url for WIKIWIKI.jp by video ID')
+@click.option('--id')
+@click.option('--name')
+@with_appcontext
+def generate_youtube_wikiwiki(id: str, name: str):
+    format = Format()
+    csv = Csv()
+    youtube = Youtube(app)
+
+    channel_template_list = csv.read_youtube_template_list()
+    template = None
+    caption_template = None
+    delimeters = None
+
+    for i in range(len(channel_template_list['names'])):
+        if channel_template_list['names'][i] == name:
+            template = channel_template_list['templates'][i]
+            caption_template = channel_template_list['caption_templates'][i]
+            delimeters = channel_template_list['caption_templates'][i]
+
+    if not template or not caption_template or not delimeters:
+        exit()
+
+    item = youtube.fetch_video_detail([id])
+    result = format.generate_youtube_wikiwiki_statement(
+        template,
+        caption_template,
+        delimeters,
+        name,
+        item[0]['title'],
+        item[0]['description'],
+        item[0]['url'],
+        item[0]['published_at'],
+        item[0]['title'],
+    )
+    print(result)
+
 
 @app.cli.command(help='Generate Channel ID')
 @with_appcontext

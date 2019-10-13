@@ -42,26 +42,27 @@ Commands
 
 ### Get Youtube video list
 ```
-$ flask generate-youtube-wikiwiki
+$ flask generate-youtube-wikiwiki-list
 ```
 
-| Params | Description | Value example |
-| --- | --- | --- |
-| names | A list of VTuber's names with ',' separated | `--names=月ノ美兎,樋口楓` |
-| date | Get Youtube video list uploaded after this list | `--date=2019-10-1` |
+| Params | Required | Description | Value example |
+| --- | --- | --- | --- |
+| names | no | A list of VTuber's names with ',' separated | `--names=月ノ美兎,樋口楓` |
+| date | no | Get Youtube video list uploaded after this list | `--date=2019-10-1` |
+
+### Get Youtube video detail by video id
+```
+$ flask generate-youtube-wikiwiki
+```
+| Params | Required | Description | Value example |
+| --- | --- | --- | --- |
+| id | yes | Get Youtube video data by this id | `--id=V2mU8jZCc7w` |
+| name | yes | Use this member's template | `--name=月ノ美兎` |
 
 ### Get Youtube channel ids for にじさんじ members
 ```
 $ flask generate-youtube-channel-id
 ```
-
-### Get Youtube video detail by video id (WIP)
-```
-$ flask generate-youtube-wikiwiki
-```
-| Params | Description | Value example |
-| --- | --- | --- |
-| videoID | Get Video list uploaded after this list | `--date=2019-10-1` |
 
 flake8
 ---
