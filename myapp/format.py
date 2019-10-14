@@ -37,7 +37,7 @@ class Format:
                         collaborators.append(self.tag_template.format(tag=member))
 
         collaborator_str = ''
-        if len(collaborators) != 0:
+        if len(collaborators) != 0 and caption_template:
             collaborator_str = '\n' + caption_template.format(collaborators=delimiter.join(collaborators))
 
         return video_str + collaborator_str
