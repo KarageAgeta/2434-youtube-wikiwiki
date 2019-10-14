@@ -24,19 +24,22 @@ class Format:
             url=url
         )
 
-        # Generate caption if the video has any collaborators
+        # Generate caption if the video has collaborators
         csv = Csv()
         members = csv.init_members()
         collaborators = []
+
         for tag in tags:
-            if members.count(tag) != 0 and tag != name:
+            if members.count(tag) != 0 and tag != name \
+                    and self.tag_template.format(tag=tag) not in collaborators:
                 collaborators.append(self.tag_template.format(tag=tag))
-            else:
-                for member in members:
-                    if re.match(member, description):
-                        collaborators.append(self.tag_template.format(tag=member))
+        for member in members:
+            if re.match(member, description) \
+                    and self.tag_template.format(tag=member) not in collaborators:
+                collaborators.append(self.tag_template.format(tag=member))
 
         collaborator_str = ''
+
         if len(collaborators) != 0 and caption_template:
             collaborator_str = '\n' + caption_template.format(collaborators=delimiter.join(collaborators))
 
